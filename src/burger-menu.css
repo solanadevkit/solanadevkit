@@ -1,0 +1,57 @@
+/* Hide burger menu on desktop, show on mobile */
+.mobile-nav {
+  display: none;
+}
+
+/* Hide desktop nav on mobile */
+.desktop-nav {
+  display: flex;
+}
+
+@media (max-width: 900px) {
+  .mobile-nav {
+    display: block !important;
+    z-index: 1000;
+  }
+  .desktop-nav {
+    display: none !important;
+  }
+}
+
+/* Hide burger menu button on desktop */
+.bm-burger-button {
+  display: none;
+}
+
+/* Show burger menu button only on mobile */
+@media (max-width: 900px) {
+  .bm-burger-button {
+    display: block;
+    position: fixed;
+    width: 30px;
+    height: 24px;
+    right: 24px;
+    top: 24px;
+    z-index: 1100;
+  }
+}
+
+/* Optional: Style react-burger-menu overlay and menu */
+.bm-burger-bars {
+  background: #60efff;
+}
+.bm-menu {
+  background: #181a2a;
+  padding: 2.5em 1.5em 0;
+  font-size: 1.15em;
+}
+.bm-item-list a {
+  color: #60efff;
+  display: block;
+  margin-bottom: 1.2em;
+  font-weight: bold;
+  text-decoration: none;
+}
+.bm-overlay {
+  background: rgba(0, 0, 0, 0.3);
+} 
