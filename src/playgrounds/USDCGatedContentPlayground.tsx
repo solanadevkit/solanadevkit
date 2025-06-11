@@ -211,7 +211,7 @@ const USDCGatedContentPlayground = () => {
             <div className="side" style={{ flex: 1, minWidth: 0 }}>
               <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: '0 24px', marginTop: 28}}>
                 <h2 style={{textAlign: 'left', margin: 0}}>Code</h2>
-                <a href="/docs?guide=usdc-gated" style={{ color: '#60efff', fontWeight: 500, fontSize: 15 }}>Detailed Guide</a>
+                <a href="/docs?guide=usdc-gated-content" style={{ color: '#60efff', fontWeight: 500, fontSize: 15 }}>Detailed Guide</a>
               </div>
               <SyntaxHighlighter language="tsx" style={vscDarkPlus} customStyle={{ borderRadius: 8, fontSize: 14, width: '100%' }}>
                 {usdcGatedCode}

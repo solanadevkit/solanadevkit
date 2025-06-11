@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import SendSolGuide from './guides/SendSolGuide';
 import SignVerifyGuide from './guides/SignVerifyGuide';
 import StakeSolGuide from './guides/StakeSolGuide';
@@ -11,6 +11,9 @@ import ConnectWalletGuide from './guides/ConnectWalletGuide';
 import TroubleshootingGuide from './guides/TroubleshootingGuide';
 import SecurityBestPracticesGuide from './guides/SecurityBestPracticesGuide';
 import GettingStartedGuide from './guides/GettingStartedGuide';
+import OrderBookGuide from './guides/OrderBookGuide';
+import LiquidityPoolGuide from './guides/LiquidityPoolGuide';
+import LoanGuide from './guides/LoanGuide';
 
 const guides = [
   { key: 'connect-wallet', label: 'Connect Wallet', component: <ConnectWalletGuide />, link: '/playground/connect-wallet' },
@@ -21,14 +24,20 @@ const guides = [
   { key: 'file-hash-register', label: 'Onchain File Hash Register', component: <OnchainFileHashRegisterGuide />, link: '/playground/file-hash-register' },
   { key: 'rent-exemption', label: 'Rent Exemption', component: <RentExemptionGuide />, link: '/playground/rent-exemption' },
   { key: 'stake-sol', label: 'Stake SOL', component: <StakeSolGuide />, link: '/playground/stake-sol' },
+  { key: 'order-book', label: 'Order Book', component: <OrderBookGuide />, link: '/playground/order-book' },
+  { key: 'liquidity-pool', label: 'Liquidity Pool', component: <LiquidityPoolGuide />, link: '/playground/liquidity-pool' },
+  { key: 'loan', label: 'Loan', component: <LoanGuide />, link: '/playground/loan' },
   { key: 'troubleshooting', label: 'Troubleshooting', component: <TroubleshootingGuide />, link: '/docs/troubleshooting' },
   { key: 'security-best-practices', label: 'Security Best Practices', component: <SecurityBestPracticesGuide />, link: '/docs/security-best-practices' },
   { key: 'getting-started', label: 'Getting Started', component: <GettingStartedGuide />, link: '/docs?guide=getting-started' },
 ];
 
 export default function DocsPage() {
-  const [selected, setSelected] = useState('send-sol');
-  const guide = guides.find(g => g.key === selected);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const params = new URLSearchParams(location.search);
+  const selected = params.get('guide') || 'send-sol';
+  const guide = guides.find(g => g.key === selected) || guides[1];
 
   return (
     <div style={{ display: 'flex', height: '100%' }}>
@@ -49,7 +58,7 @@ export default function DocsPage() {
                   fontWeight: selected === g.key ? 'bold' : 'normal',
                   fontSize: 16,
                 }}
-                onClick={() => setSelected(g.key)}
+                onClick={() => navigate(`/docs?guide=${g.key}`)}
               >
                 {g.label}
               </button>

@@ -22,6 +22,9 @@ import RentExemptionPlayground from './playgrounds/RentExemptionPlayground';
 import SolanaPayCheckoutPlayground from './playgrounds/SolanaPayCheckoutPlayground';
 import OnchainFileHashRegisterPlayground from './playgrounds/OnchainFileHashRegisterPlayground';
 import ConnectWalletPlayground from './playgrounds/ConnectWalletPlayground';
+import OrderBookPlayground from './playgrounds/OrderBookPlayground';
+import LiquidityPoolPlayground from './playgrounds/LiquidityPoolPlayground';
+import LoanPlayground from './playgrounds/LoanPlayground';
 // @ts-ignore
 import { slide as Menu } from 'react-burger-menu';
 import './burger-menu.css';
@@ -497,11 +500,14 @@ const Home = () => (
       <li><b>Send SOL:</b> Try sending SOL to any address and see how transactions work on-chain.</li>
       <li><b>Sign & Verify Message:</b> Sign messages with your wallet and verify signatures for authentication.</li>
       <li><b>USDC Gated Content:</b> Unlock content based on your USDC token balance.</li>
+      <li><b>Rent Exemption:</b> Check if a Solana account is rent-exempt and learn about account storage.</li>
       <li><b>Solana Pay Checkout:</b> Generate QR codes and simulate Solana Pay payments.</li>
       <li><b>Onchain File Hash Register:</b> Register and verify file hashes on-chain for proof-of-existence.</li>
-      <li><b>Rent Exemption:</b> Check if a Solana account is rent-exempt and learn about account storage.</li>
       <li><b>Stake SOL:</b> Stake your SOL to a validator and manage your stake accounts.</li>
-      <li><b>Order Book, Liquidity Pool, Loan:</b> <span style={{ color: '#aaa' }}>Coming soon — advanced DeFi playgrounds for trading, liquidity, and lending!</span></li>
+      <li><b>Order Book:</b> Trade and manage liquidity in a decentralized order book.</li>
+      <li><b>Liquidity Pool:</b> Participate in a decentralized liquidity pool.</li>
+      <li><b>Loan:</b> Borrow and lend assets in a decentralized loan protocol.</li>
+      <li><b>DeFi:</b> Explore advanced decentralized finance playgrounds for trading, liquidity provision, and lending on Solana.</li>
     </ul>
     <p style={{ fontSize: 16, color: '#60efff', marginBottom: 16, paddingLeft: 32 }}>
       See the <Link to="/docs?guide=getting-started" style={{ color: '#60efff', fontWeight: 500 }}>Docs</Link> for installation requirements and local setup instructions.
@@ -512,11 +518,8 @@ const Home = () => (
     <p style={{ fontSize: 15, color: '#888', paddingLeft: 30 }}>
       <b>Note:</b> This playground is mainnet-ready, but always use test wallets for experimentation. For feedback, feature requests, or contributions, email <a href="mailto:info@solana.dev" style={{color: '#60efff', textDecoration: 'none'}}>info@solana.dev</a>.
     </p>
-    <p style={{marginTop: 16}}>
-      <a href="mailto:info@solana.dev" style={{color: '#60efff', textDecoration: 'none'}}>info@solana.dev</a>
-    </p>
-    <p style={{marginTop: 8}}>
-      <a href="https://github.com/solana-dev-playground" target="_blank" rel="noopener noreferrer" style={{color: '#60efff', textDecoration: 'none'}}>GitHub</a>
+    <p style={{marginTop: 8, paddingLeft: 30}}>
+      Join us and contribute on <a href="https://github.com/solanadevkit/solanadevkit" target="_blank" rel="noopener noreferrer" style={{color: '#60efff', textDecoration: 'none'}}>GitHub</a>!
     </p>
     <div style={{ textAlign: 'center', marginTop: 80, marginBottom: 24, color: '#b48be4', fontWeight: 500, fontSize: 17 }}>
       With love for the Solana community 💜
@@ -567,30 +570,95 @@ const App: React.FC = () => {
     <Router>
       <div className="app-container">
         {/* Desktop Navigation */}
-        <nav className="nav desktop-nav" style={{ display: 'flex', flexWrap: 'nowrap', whiteSpace: 'nowrap', gap: 16, paddingLeft: '2rem' }}>
+        <nav className="nav desktop-nav" style={{ display: 'flex', flexWrap: 'nowrap', whiteSpace: 'nowrap', gap: 16, paddingLeft: '2rem', alignItems: 'center' }}>
+          {/* Dropdown hover CSS */}
+          <style>{`
+            .dropdown:hover .dropdown-content {
+              display: block !important;
+            }
+            .dropdown-content {
+              display: none;
+              position: absolute;
+              top: 100%;
+              left: 0;
+              background: #181c2a;
+              border: 1px solid #222;
+              border-radius: 6px;
+              min-width: 200px;
+              z-index: 100;
+              box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+              padding: 8px;
+            }
+            .dropdown-link {
+              display: block;
+              color: #60efff;
+              padding: 6px 12px;
+              text-decoration: none;
+              border-radius: 4px;
+              font-size: 15px;
+            }
+            .dropdown-link:hover {
+              background: #22223b;
+              color: #fff;
+            }
+            .dropdown-label {
+              padding: 6px 12px;
+              border-radius: 4px;
+              font-size: 16px;
+              color: #60efff;
+              font-weight: 500;
+            }
+          `}</style>
           <Link to="/">Home</Link>
-          <Link to="/playground/connect-wallet">Connect Wallet</Link>
-          <Link to="/playground/send-sol">Send SOL</Link>
-          <Link to="/playground/sign-verify">Sign & Verify Message</Link>
-          <Link to="/playground/usdc-gated-content">USDC Gated Content</Link>
-          <Link to="/playground/solana-pay-checkout">Solana Pay Checkout</Link>
-          <Link to="/playground/file-hash-register">Onchain File Hash Register</Link>
-          <Link to="/playground/rent-exemption">Rent Exemption</Link>
-          <Link to="/playground/stake-sol">Stake SOL</Link>
-          <DeFiDropdown />
+          {/* Beginner Dropdown */}
+          <div style={{ position: 'relative' }} className="dropdown">
+            <span style={{ cursor: 'pointer' }} className="dropdown-label">Beginner ▾</span>
+            <div className="dropdown-content">
+              <Link to="/playground/connect-wallet" className="dropdown-link">Connect Wallet</Link>
+              <Link to="/playground/send-sol" className="dropdown-link">Send SOL</Link>
+              <Link to="/playground/sign-verify" className="dropdown-link">Sign & Verify Message</Link>
+            </div>
+          </div>
+          {/* Intermediate Dropdown */}
+          <div style={{ position: 'relative' }} className="dropdown">
+            <span style={{ cursor: 'pointer' }} className="dropdown-label">Intermediate ▾</span>
+            <div className="dropdown-content">
+              <Link to="/playground/usdc-gated-content" className="dropdown-link">USDC Gated Content</Link>
+              <Link to="/playground/rent-exemption" className="dropdown-link">Rent Exemption</Link>
+              <Link to="/playground/solana-pay-checkout" className="dropdown-link">Solana Pay Checkout</Link>
+              <Link to="/playground/file-hash-register" className="dropdown-link">Onchain File Hash Register</Link>
+            </div>
+          </div>
+          {/* Advanced Dropdown */}
+          <div style={{ position: 'relative' }} className="dropdown">
+            <span style={{ cursor: 'pointer' }} className="dropdown-label">Advanced ▾</span>
+            <div className="dropdown-content">
+              <Link to="/playground/stake-sol" className="dropdown-link">Stake SOL</Link>
+              <Link to="/playground/order-book" className="dropdown-link">Order Book</Link>
+              <Link to="/playground/liquidity-pool" className="dropdown-link">Liquidity Pool</Link>
+              <Link to="/playground/loan" className="dropdown-link">Loan</Link>
+            </div>
+          </div>
           <Link to="/docs">Docs</Link>
+          <a href="https://github.com/solanadevkit/solanadevkit" target="_blank" rel="noopener noreferrer" style={{ color: '#60efff', marginLeft: 12 }}>GitHub</a>
         </nav>
         {/* Mobile Burger Menu */}
         <Menu right className="mobile-nav">
           <Link to="/">Home</Link>
+          <div style={{ padding: '8px 16px', fontWeight: 600, color: '#60efff' }}>Beginner</div>
           <Link to="/playground/connect-wallet">Connect Wallet</Link>
           <Link to="/playground/send-sol">Send SOL</Link>
           <Link to="/playground/sign-verify">Sign & Verify Message</Link>
+          <div style={{ padding: '8px 16px', fontWeight: 600, color: '#60efff' }}>Intermediate</div>
           <Link to="/playground/usdc-gated-content">USDC Gated Content</Link>
+          <Link to="/playground/rent-exemption">Rent Exemption</Link>
           <Link to="/playground/solana-pay-checkout">Solana Pay Checkout</Link>
           <Link to="/playground/file-hash-register">Onchain File Hash Register</Link>
-          <Link to="/playground/rent-exemption">Rent Exemption</Link>
+          <div style={{ padding: '8px 16px', fontWeight: 600, color: '#60efff' }}>Advanced</div>
           <Link to="/playground/stake-sol">Stake SOL</Link>
+          <Link to="/playground/order-book">Order Book</Link>
+          <Link to="/playground/liquidity-pool">Liquidity Pool</Link>
+          <Link to="/playground/loan">Loan</Link>
           <Link to="/docs">Docs</Link>
         </Menu>
         <Routes>
@@ -603,6 +671,9 @@ const App: React.FC = () => {
           <Route path="/playground/file-hash-register" element={<OnchainFileHashRegisterPlayground />} />
           <Route path="/playground/rent-exemption" element={<RentExemptionPlayground />} />
           <Route path="/playground/stake-sol" element={<StakeSolPlayground />} />
+          <Route path="/playground/order-book" element={<OrderBookPlayground />} />
+          <Route path="/playground/liquidity-pool" element={<LiquidityPoolPlayground />} />
+          <Route path="/playground/loan" element={<LoanPlayground />} />
           <Route path="/docs" element={<DocsPage />} />
         </Routes>
       </div>

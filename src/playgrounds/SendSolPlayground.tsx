@@ -88,6 +88,15 @@ const SendSolPlayground = () => {
               <div className="card" style={{ marginTop: 0 }}>
                 <SendSolForm />
               </div>
+              <div className="card" style={{marginTop: 24}}>
+                <h3>How it Works</h3>
+                <ol>
+                  <li>Connect your wallet.</li>
+                  <li>Enter the recipient's address and amount of SOL.</li>
+                  <li>Click <b>Send SOL</b> to send.</li>
+                  <li>View transaction status and confirmation.</li>
+                </ol>
+              </div>
             </div>
             <div className="side" style={{ flex: 1, minWidth: 0 }}>
               <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: '0 24px', marginTop: 28}}>

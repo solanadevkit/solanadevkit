@@ -78,6 +78,14 @@ const SignVerifyPlayground = () => {
               <h2 style={{textAlign: 'center', width: '100%', marginBottom: 24}}>Sign & Verify Message</h2>
               <WalletConnect />
               <SignVerifyMessage />
+              <div className="card" style={{marginTop: 24}}>
+                <h3>How it Works</h3>
+                <ol>
+                  <li>Connect your wallet.</li>
+                  <li>Click <b>Sign to Reveal</b> to sign a challenge message.</li>
+                  <li>The app verifies your signature and reveals the secret if valid.</li>
+                </ol>
+              </div>
             </div>
             <div className="side" style={{ flex: 1, minWidth: 0 }}>
               <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: '0 24px', marginTop: 28}}>

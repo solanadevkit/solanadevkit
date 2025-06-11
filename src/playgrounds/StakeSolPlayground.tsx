@@ -266,6 +266,15 @@ const StakeSolPlayground = () => {
               <h2 style={{textAlign: 'center', width: '100%', marginBottom: 24}}>Stake SOL Playground</h2>
               <WalletConnect />
               <StakeSolForm />
+              <div className="card" style={{marginTop: 24}}>
+                <h3>How it Works</h3>
+                <ol>
+                  <li>Connect your wallet.</li>
+                  <li>Enter a validator vote account address and amount of SOL to stake.</li>
+                  <li>Click <b>Stake SOL</b> to delegate your SOL.</li>
+                  <li>View and manage your stake accounts, and unstake if desired.</li>
+                </ol>
+              </div>
             </div>
             <div className="side" style={{ flex: 1, minWidth: 0 }}>
               <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: '0 24px', marginTop: 28}}>
